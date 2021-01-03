@@ -1,6 +1,18 @@
 # Music-Library-Conversion-Script
 A Python Script that converts a music library consisting of FLAC and MP3 files to only MP3 Files. It can also copy LRC files and also convert and scale down embedded covers.
 
+## Features
+  - Conversion of Music Library consisting of FLAC and MP3 files into a new one that only consists of MP3 files for portable use.
+  - Can copy corresponding LRC-files
+  - Can convert embedded covers to JPEG for smaller file sizes
+  - Can scale down embedded covers for smaller file sizes while keeping aspect ratio
+  - Generates extensive log by default
+  - Colored terminal output on supported environments for better readablity
+  
+## Planned Features
+  - Multiple conversion/copy processes simultaineously
+  - Automatic LRF-file grabbing
+
 ## Requirements
   - Python 3
   - ffmpeg
