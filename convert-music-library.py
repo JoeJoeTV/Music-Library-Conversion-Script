@@ -33,7 +33,7 @@ from blessed import Terminal
 #Variables and Constants
 #------------------------
 
-version="1.0.0"
+version="1.0.1"
 
 short_options = "hvls:cn"
 long_options = ["help", "version", "copy-lyrics", "scale-cover=", "convert-cover", "no-log-file"]
