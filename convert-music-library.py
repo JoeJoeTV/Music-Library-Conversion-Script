@@ -43,8 +43,7 @@ settings = {
     "cover_scale": 0,
     "convert_cover": False,
     "generate_logfile": True,
-    "replace_files": False,
-    "create_dest": False
+    "replace_files": False
 }
 helptext = "USAGE: {0} <Source Directory> <Destination Directory> [OPTIONS]\n\nConvert Music Libraries containing MP3 and FLAC files to better fit smaller file size limitations.\n\nArguments:\n   <Source Path>                       The path where the original audio files, which are to be converted, are stored\n   <Destination Path>                  The path where the converted files should be stored\n\n   -h          --help                  Displays this Help Message and exits\n   -l          --copy-lyrics           Also copy matching Lyric-Files(LRC)\n   -s <size>   --scale-cover=<size>    Scales the cover to fit in a box width with and height of <size>\n   -c          --convert-cover         Converts the cover to the JPEG format\n   -n          --no-log-file           Disables the normally generated LOG-file"
 summarytext = "\nSUMMARY:\n  Found {0} files!\n    - Converted:\n      - Success: {1}\n      - Failure: {2}\n    - Copied:\n      - Success: {3}\n      - Failure: {4}\n    - Exists: {5}\n    - LRC-Files Copied:\n      - Success: {6}\n      - Failure: {7}"
@@ -375,7 +374,7 @@ for root, dirs, files in os.walk(sourcepath):
                             #Convert cover according to set settings
                             convertCover(extracted_cover_filename, new_cover_filename, settings["convert_cover"], settings["cover_scale"])
 
-                            result_convert_file = subprocess.run(["ffmpeg", "-i", originalfilepath, "-f", extracted_cover_format, "-i", new_cover_filename, "-hide_banner", "-loglevel", "quiet", "-c:v", "copy", "-map", "0:a", "-map", "1:v", "-c:a", "mp3", "-b:a", "320k", "-map_metadata", "0", "-id3v2_version", "3", "-write_xing", "0", newfilepath], capture_output=True, text=True)
+                            result_convert_file = subprocess.run(["ffmpeg", "-i", originalfilepath, "-f", "image2", "-i", new_cover_filename, "-hide_banner", "-loglevel", "quiet", "-c:v", "copy", "-map", "0:a", "-map", "1:v", "-c:a", "mp3", "-b:a", "320k", "-map_metadata", "0", "-id3v2_version", "3", "-write_xing", "0", newfilepath], capture_output=True, text=True)
 
                             if result_convert_file.returncode == 0:
                                 print(term.green("SUCCESS (CONVERT)"))
