@@ -19,7 +19,7 @@ from PIL import Image
 from resizeimage import resizeimage
 import re
 import colorama
-from blessings import Terminal
+from blessed import Terminal
 
 #Arguments
 # - Source Path
