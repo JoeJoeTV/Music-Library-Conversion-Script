@@ -174,7 +174,7 @@ def getLogFileName(basename, logdir=os.getcwd()):
 
 def getAudioFileCoverFormat(audio_file):
     if os.path.exists(audio_file) and os.path.isfile(audio_file):
-        result_probe_format = subprocess.run(["ffprobe", "-hide_banner", "-select_streams", "v:0", "-show_entries", "stream=codec_name", "-loglevel", "quiet", audio_file], capture_output=True, text=True)
+        result_probe_format = subprocess.run(["ffprobe", "-hide_banner", "-loglevel", "quiet", "-select_streams", "v:0", "-show_entries", "stream=codec_name", audio_file], capture_output=True, text=False)
         in_stream_section = False
         codec_name = ""
         
@@ -294,7 +294,7 @@ for root, dirs, files in os.walk(sourcepath):
                         new_cover_filename = os.path.join(tmpdir, "tmp_newcover")
                         
                         #Extract the cover using ffmpeg
-                        result_extract_cover = subprocess.run(["ffmpeg", "-i", originalfilepath, "-c:v", "copy", "-loglevel", "quiet", "-f", "image2", extracted_cover_filename], capture_output=True, text=False)
+                        result_extract_cover = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "quiet", "-i", originalfilepath, "-c:v", "copy", "-f", "image2", extracted_cover_filename], capture_output=True, text=False)
                         
                         #Check if the extraction process was successful
                         if result_extract_cover.returncode == 0:
@@ -302,7 +302,7 @@ for root, dirs, files in os.walk(sourcepath):
                             convertCover(extracted_cover_filename, new_cover_filename, settings["convert_cover"], settings["cover_scale"])
                             
                             #Re-insert cover into audio file using ffmpeg
-                            result_replace_cover = subprocess.run(["ffmpeg","-i", originalfilepath, "-f", "image2", "-i", new_cover_filename, "-c", "copy", "-map", "0:a", "-map", "1:v", "-write_xing", "0", newfilepath], capture_output=True, text=True)
+                            result_replace_cover = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "quiet", "-i", originalfilepath, "-f", "image2", "-i", new_cover_filename, "-c", "copy", "-map", "0:a", "-map", "1:v", "-write_xing", "0", newfilepath], capture_output=True, text=False)
 
                             if result_replace_cover.returncode == 0:
                                 print(term.green("SUCCESS (CONVERT)"))
@@ -367,14 +367,14 @@ for root, dirs, files in os.walk(sourcepath):
                         new_cover_filename = os.path.join(tmpdir, "tmp_newcover")
                         
                         #Extract the cover using ffmpeg
-                        result_extract_cover = subprocess.run(["ffmpeg", "-i", originalfilepath, "-c:v", "copy", "-loglevel", "quiet", "-f", "image2", extracted_cover_filename], capture_output=True, text=False)
+                        result_extract_cover = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "quiet", "-i", originalfilepath, "-c:v", "copy", "-f", "image2", extracted_cover_filename], capture_output=True, text=False)
                         
                         #Check if the extraction process was successful
                         if result_extract_cover.returncode == 0:
                             #Convert cover according to set settings
                             convertCover(extracted_cover_filename, new_cover_filename, settings["convert_cover"], settings["cover_scale"])
 
-                            result_convert_file = subprocess.run(["ffmpeg", "-i", originalfilepath, "-f", "image2", "-i", new_cover_filename, "-hide_banner", "-loglevel", "quiet", "-c:v", "copy", "-map", "0:a", "-map", "1:v", "-c:a", "mp3", "-b:a", "320k", "-map_metadata", "0", "-id3v2_version", "3", "-write_xing", "0", newfilepath], capture_output=True, text=True)
+                            result_convert_file = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "quiet", "-i", originalfilepath, "-f", "image2", "-i", new_cover_filename, "-c:v", "copy", "-map", "0:a", "-map", "1:v", "-c:a", "mp3", "-b:a", "320k", "-map_metadata", "0", "-id3v2_version", "3", "-write_xing", "0", newfilepath], capture_output=True, text=False)
 
                             if result_convert_file.returncode == 0:
                                 print(term.green("SUCCESS (CONVERT)"))
@@ -399,7 +399,7 @@ for root, dirs, files in os.walk(sourcepath):
                         if os.path.exists(new_cover_filename):
                             os.remove(new_cover_filename)
                 else:
-                    result_convert_file = subprocess.run(["ffmpeg", "-i", originalfilepath, "-hide_banner", "-loglevel", "quiet", "-c:v", "copy", "-b:a", "320k", "-map_metadata", "0", "-c:a", "mp3", "-id3v2_version", "3", "-write_xing", "0", newfilepath], capture_output=True)
+                    result_convert_file = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "quiet", "-i", originalfilepath, "-c:v", "copy", "-b:a", "320k", "-map_metadata", "0", "-c:a", "mp3", "-id3v2_version", "3", "-write_xing", "0", newfilepath], capture_output=True, text=False)
                     
                     if result_convert_file.returncode == 0:
                         print(term.green("SUCCESS (TO MP3 ONLY)"))
