@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+ #!/usr/bin/python3
 # coding: utf8
 
 # Music Library Converter
@@ -174,7 +174,7 @@ def getLogFileName(basename, logdir=os.getcwd()):
 
 def getAudioFileCoverFormat(audio_file):
     if os.path.exists(audio_file) and os.path.isfile(audio_file):
-        result_probe_format = subprocess.run(["ffprobe", "-hide_banner", "-loglevel", "quiet", "-select_streams", "v:0", "-show_entries", "stream=codec_name", audio_file], capture_output=True, text=False)
+        result_probe_format = subprocess.run(["ffprobe", "-hide_banner", "-loglevel", "quiet", "-select_streams", "v:0", "-show_entries", "stream=codec_name", audio_file], capture_output=True, text=True)
         in_stream_section = False
         codec_name = ""
         
