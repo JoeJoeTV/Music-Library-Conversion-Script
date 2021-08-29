@@ -11,7 +11,7 @@ A Python Script that converts a music library consisting of FLAC and MP3 files t
   
 ## Planned Features
   - Multiple conversion/copy processes simultaineously
-  - Automatic LRF-file grabbing
+  - Automatic LRC-file grabbing
 
 ## Requirements
   - Python 3
